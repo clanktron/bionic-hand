@@ -1,8 +1,8 @@
 #include <Servo.h>
 
-#define CLOSEBUTTON_PARTIAL 3
-#define CLOSEBUTTON_FULL 4
-#define OPENBUTTON 2
+#define CLOSEBUTTON_PARTIAL 2
+#define CLOSEBUTTON_FULL 3
+#define OPENBUTTON 4
 
 #define SERVO_INDEX 5
 #define SERVO_REM 6
@@ -10,12 +10,14 @@
 #define FSR_PIN A0
 
 // Force reading at which index/thumb should stop squeezing grape
-int fsr_threshold = ;
+int fsr_threshold = 30;
+// Data input from force sensor
+int fsrVal = 0;
 
 // Servo position that index/thumb should stop at when closing entire hand
-int index_full_threshold = ;
+int index_full_threshold = 30;
 // Servo position that remaining three fingers should stop at when closing entire hand
-int rem_full_threshold = ;
+int rem_full_threshold = 30;
 
 // Initialization of control button states
 int closebuttonstate_partial = 0;
@@ -58,7 +60,7 @@ void loop() {
 }
 
 void closeHand_partial() {
-    while (fsrVal < fsr_threshold) {
+    if (fsrVal < fsr_threshold) {
         indexServo.write(index_pos);
         index_pos += 1;
     }
@@ -69,6 +71,19 @@ void closeHand_full() {
     rem_pos = rem_full_threshold;
     indexServo.write(index_pos);
     remServo.write(rem_pos);
+}
+
+void closeHand_full_2() {
+    if (index_pos < index_full_threshold) {
+        indexServo.write(index_pos);
+        index_pos += 1;
+        delay(15);
+    }
+    if (rem_pos < rem_full_threshold) {
+        remServo.write(rem_pos += 1);
+        rem_pos += 1;
+        delay(15);
+    }
 }
 
 void openHand() {
