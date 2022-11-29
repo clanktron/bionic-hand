@@ -8,9 +8,9 @@
 #define SERVO_REM 6
 
 // Servo position that thumb should stop at when closing entire hand
-int thumb_threshold = 30;
+int thumb_threshold = 180;
 // Servo position that remaining fingers should stop at when closing entire hand
-int rem_threshold = 30;
+int rem_threshold = 180;
 
 // Initialization of control button states
 int closebuttonstate_thumb = 0;
@@ -51,6 +51,7 @@ void closeThumb() {
     if (thumb_pos < thumb_threshold) {
         thumbServo.write(thumb_pos);
         thumb_pos += 1;
+        delay(15);
     }
 }
 
@@ -58,13 +59,12 @@ void closeHand() {
     if (thumb_pos < thumb_threshold) {
         thumbServo.write(thumb_pos);
         thumb_pos += 1;
-        delay(15);
     }
     if (rem_pos < rem_threshold) {
-        remServo.write(rem_pos += 1);
+        remServo.write(rem_pos);
         rem_pos += 1;
-        delay(15);
     }
+    delay(15);
 }
 
 void openHand() {
