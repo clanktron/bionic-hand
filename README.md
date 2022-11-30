@@ -17,7 +17,3 @@ When pressed will trigger the closeHand_full() function. This closes all fingers
 ### Button3:
 
 When pressed will trigger the openHand() function. This returns the hand to its opened 'resting' state.
-
-### Button4:
-
-While pressed the wrist of the hand will rotate.
